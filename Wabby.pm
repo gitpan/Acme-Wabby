@@ -3,7 +3,7 @@
 # Distributed under the terms of the GPL Version 2
 
 package Acme::Wabby;
-$Acme::Wabby::VERSION='0.10';
+$Acme::Wabby::VERSION='0.11';
 
 use strict;
 use warnings;
@@ -28,8 +28,8 @@ sub new {
     my $self = shift;
 
     # An odd number of values means that they didn't pass us in a hash.
-    die "Sanity check: Invalid number of arguments"
-        unless (scalar(@_) % 2 == 0);
+    die "Sanity check: Constructor takes a hash of options"
+        unless (ref($self) eq "HASH");
     my %conf = @_;
 
     # Set up the initial state of our data structures
@@ -98,7 +98,7 @@ sub new {
 # Returns:   Nothing.
 sub DESTROY {
     my $self = shift;
-    die "Invalid object" unless ref $self;
+    die "Invalid object" unless (ref($self) eq __PACKAGE__);
 
     if ($self->{'conf'}{'autosave_on_destroy'}) {
         $self->save;
@@ -110,7 +110,7 @@ sub DESTROY {
 # Returns:   undef on failure, true on success.
 sub save {
     my $self = shift;
-    die "Invalid object" unless ref $self;
+    die "Invalid object" unless (ref($self) eq __PACKAGE__);
 
     # Since Storable can die on serious errors, or simply return an undef,
     # we need to wrap these calls in evals
@@ -140,7 +140,7 @@ sub save {
 # Returns:   undef on failure, true on success
 sub load {
     my $self = shift;
-    die "Invalid object" unless ref $self;
+    die "Invalid object" unless (ref($self) eq __PACKAGE__);
 
     # Since Storable can die on serious errors, or simply return an undef,
     # we need to wrap these calls in evals
@@ -175,7 +175,7 @@ sub load {
 #            currently if an invalid parameter is passed in.
 sub add {
     my $self = shift;
-    die "Invalid object" unless ref $self;
+    die "Invalid object" unless (ref($self) eq __PACKAGE__);
 
     # Make sure we actually got something to add
     my $text = shift;
@@ -317,7 +317,7 @@ sub add {
 #               
 sub spew {
     my $self = shift;
-    die "Invalid object" unless ref $self;
+    die "Invalid object" unless (ref($self) eq __PACKAGE__);
     my $text = shift;
 
     # If we don't have at least 10 * min_len words, we probably don't have a
@@ -470,7 +470,7 @@ sub spew {
 #            number of transitions between words.
 sub stats {
     my $self = shift;
-    die "Invalid object" unless ref $self;
+    die "Invalid object" unless (ref($self) eq __PACKAGE__);
 
     # Get the number of words in our hash.
     my $word_count = scalar keys %{$self->{'data'}{'hash'}};
