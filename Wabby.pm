@@ -26,11 +26,26 @@ use constant DEF_AUTOSAVE => 0;
 # Returns:   A reference to the created object. Dies on error.
 sub new {
     my $self = shift;
+    my %conf;
 
-    # An odd number of values means that they didn't pass us in a hash.
-    die "Sanity check: Constructor takes a hash of options"
-        unless (ref($self) eq "HASH");
-    my %conf = @_;
+    if (@_ == 1) {
+        my $ref = shift;
+        if (!ref($ref)) {
+            die "Sanity check: One parameter passed, and it is not a reference";
+        }
+        elsif (ref($ref) eq "HASH") {
+            %conf = %{$ref};
+        }
+        else {
+            die "Sanity check: One parameter passed, and it is not a hash reference";
+        }
+    }
+    elsif (@_ % 2 != 0) {
+        die "Sanity check: Odd number of parameters, expecting a hash";
+    }
+    else {
+        %conf = @_;
+    }
 
     # Set up the initial state of our data structures
     my %hash = ();

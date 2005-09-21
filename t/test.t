@@ -16,38 +16,122 @@ And tender churl mak'st waste in niggarding:
 Pity the world, or else this glutton be,
 To eat the world's due, by the grave and thee.
 EOF
+my ($wabby1, $wabby2, $wabby3, $line);
+my $TEST_COUNT = 12;
+my $TEST_NUM = 1;
 
-print "1..4\n";
-my ($wabby, $line);
-if ($wabby = Acme::Wabby->new) {
-    print "ok 1\n";
+print "$TEST_NUM..$TEST_COUNT\n";
+if ($wabby1 = Acme::Wabby->new) {
+    print "ok $TEST_NUM\n";
 }
 else {
-    print "not ok 1\n";
+    print "not ok $TEST_NUM\n";
     exit 1;
 }
-print "2..4\n";
-if ($wabby->add($text)) {
-    print "ok 2\n";
+$TEST_NUM++;
+print "$TEST_NUM..$TEST_COUNT\n";
+if ($wabby1->add($text)) {
+    print "ok $TEST_NUM\n";
 }
 else {
-    print "not ok 2\n";
+    print "not ok $TEST_NUM\n";
     exit 1;
 }
-print "3..4\n";
-if ($line = $wabby->spew) {
-    print "ok 3\n";
+$TEST_NUM++;
+print "$TEST_NUM..$TEST_COUNT\n";
+if ($line = $wabby1->spew) {
+    print "ok $TEST_NUM\n";
 }
 else {
-    print "not ok 3\n";
+    print "not ok $TEST_NUM\n";
     exit 1;
 }
-print "4..4\n";
-if ($line = $wabby->spew("Thy")) {
-    print "ok 4\n";
+$TEST_NUM++;
+print "$TEST_NUM..$TEST_COUNT\n";
+if ($line = $wabby1->spew("Thy")) {
+    print "ok $TEST_NUM\n";
 }
 else {
-    print "not ok 4\n";
+    print "not ok $TEST_NUM\n";
     exit 1;
 }
-
+$TEST_NUM++;
+print "$TEST_NUM..$TEST_COUNT\n";
+if ($wabby2 = Acme::Wabby->new( min_len => 3, max_len => 30,
+            punctuation => [".","?","!","..."], case_sensitive => 1,
+            hash_file => "./wabbyhash.dat",
+            list_file => "./wabbylist.dat",
+            autosave_on_destroy => 0, max_attempts => 1000 )) {
+    print "ok $TEST_NUM\n";
+}
+else {
+    print "not ok $TEST_NUM\n";
+    exit 1;
+}
+$TEST_NUM++;
+print "$TEST_NUM..$TEST_COUNT\n";
+if ($wabby2->add($text)) {
+    print "ok $TEST_NUM\n";
+}
+else {
+    print "not ok $TEST_NUM\n";
+    exit 1;
+}
+$TEST_NUM++;
+print "$TEST_NUM..$TEST_COUNT\n";
+if ($line = $wabby2->spew) {
+    print "ok $TEST_NUM\n";
+}
+else {
+    print "not ok $TEST_NUM\n";
+    exit 1;
+}
+$TEST_NUM++;
+print "$TEST_NUM..$TEST_COUNT\n";
+if ($line = $wabby2->spew("Thy")) {
+    print "ok $TEST_NUM\n";
+}
+else {
+    print "not ok $TEST_NUM\n";
+    exit 1;
+}
+$TEST_NUM++;
+print "$TEST_NUM..$TEST_COUNT\n";
+if ($wabby3 = Acme::Wabby->new( {min_len => 3, max_len => 30,
+            punctuation => [".","?","!","..."], case_sensitive => 1,
+            hash_file => "./wabbyhash.dat",
+            list_file => "./wabbylist.dat",
+            autosave_on_destroy => 0, max_attempts => 1000} )) {
+    print "ok $TEST_NUM\n";
+}
+else {
+    print "not ok $TEST_NUM\n";
+    exit 1;
+}
+$TEST_NUM++;
+print "$TEST_NUM..$TEST_COUNT\n";
+if ($wabby2->add($text)) {
+    print "ok $TEST_NUM\n";
+}
+else {
+    print "not ok $TEST_NUM\n";
+    exit 1;
+}
+$TEST_NUM++;
+print "$TEST_NUM..$TEST_COUNT\n";
+if ($line = $wabby2->spew) {
+    print "ok $TEST_NUM\n";
+}
+else {
+    print "not ok $TEST_NUM\n";
+    exit 1;
+}
+$TEST_NUM++;
+print "$TEST_NUM..$TEST_COUNT\n";
+if ($line = $wabby2->spew("Thy")) {
+    print "ok $TEST_NUM\n";
+}
+else {
+    print "not ok $TEST_NUM\n";
+    exit 1;
+}
