@@ -3,7 +3,7 @@
 # Distributed under the terms of the GPL Version 2
 
 package Acme::Wabby;
-$Acme::Wabby::VERSION='0.11';
+$Acme::Wabby::VERSION='0.13';
 
 use strict;
 use warnings;
